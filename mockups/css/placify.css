@@ -18,3 +18,7 @@
   background-image: url("../img/hero.png");
   background-position: 0 -30px;
 }
+
+li > a > i {
+  padding-right: 6px;
+}
