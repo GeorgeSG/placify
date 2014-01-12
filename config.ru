@@ -19,7 +19,11 @@ Dir.glob('./controllers/**/*.rb').each do |controller|
   require controller
 end
 
-controllers = [Placify::MainController]
+controllers = [
+  Placify::MainController,
+  Placify::PlacesController,
+]
+
 
 controllers.each do |controller|
   map(controller::NAMESPACE) { run controller }
