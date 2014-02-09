@@ -2,6 +2,11 @@
 defaultCategories = {};
 userCategories = {};
 
+// Hardcode Init until server is ready
+userCategories['billiard'] = [];
+userCategories['snooker'] = [];
+userCategories['darts'] = [];
+
 // Alias for the google.maps Object
 _m = google.maps;
 
@@ -84,7 +89,7 @@ function addNewPoint(event) {
     pointDesc = "<div><h3>" + pointName + "</h3><span>" + pointType + "</span><p>" + pointDesc + "</p></div>";
 
     marker.setTitle(pointName);
-    addMarker(marker, pointType, pointDesc);
+    addMarker(marker, 'user', pointType, pointDesc);
     // TODO: call backend services to store the point
   });
 }
@@ -105,12 +110,16 @@ function loadMarkers(jsonMarkers) {
     var position = latLng(element.lat, element.lng);
     var marker   = placeMarker(map, position, element.name, true);
 
-    addMarker(marker, element.type, element.description);
+    addMarker(marker, 'default', element.type, element.description);
   });
 }
 
-function addMarker(marker, type, description) {
-  defaultCategories[type].push(marker);
+function addMarker(marker, group, type, description) {
+  if (group == 'user') {
+    userCategories[type].push(marker);
+  } else {
+    defaultCategories[type].push(marker);
+  }
 
   // Setup the click event listener for the Marker:
   // Show the infoWindow with information about the selected marker
@@ -145,6 +154,21 @@ $(function() {
 
   $window.resize(function() {
     resizeCanvas();
+  });
+
+  // Handle filtering of markers via the checkboxes
+  $("#user-categories input[type=checkbox]").click(function() {
+    var $this   = $(this);
+    var checked = $this.is(':checked');
+    var type    = this.value;
+
+    if (userCategories[type] !== undefined) {
+      $.each(userCategories[type], function(_, marker) {
+        marker.setVisible(checked);
+      });
+
+      infoWindow.close();
+    }
   });
 
   // Handle filtering of markers via the checkboxes
