@@ -22,3 +22,5 @@
 li > a > i {
   padding-right: 6px;
 }
+
+#map-canvas { height: 600px }

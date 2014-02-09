@@ -1,0 +1,18 @@
+{
+  "markers": [
+    {
+      "name": "test",
+      "type": "fuck",
+      "description": "<div id='container'><h3>Test</h3><p>test</p></div>",
+      "lat": 42.696,
+      "lng": 23.342
+    },
+    {
+      "name": "tets2",
+      "type": "fuck",
+      "description": "<div id='container'><h3>Test2</h3><p>test2</p></div>",
+      "lat": 42.697,
+      "lng": 23.324
+    }
+  ]
+}
