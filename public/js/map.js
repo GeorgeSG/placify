@@ -54,23 +54,36 @@ function loadMap() {
  */
 function addNewPoint(event) {
   var clickEvent = event;
+  infoWindow.close();
+
   var marker = placeMarker(map, clickEvent.latLng, "New Point", true);
+  var $name = $("#new-point-name");
+  var $desc = $("#new-point-description");
 
   $("#add-point-modal").modal("show");
 
   $(".discard-point").unbind("click").click(function() {
     marker.setMap(null);
+
+    $name.val('');
+    $desc.val('');
+    $("#add-point-modal input[name=pointType]:checked").prop("checked", false);
   });
 
   $("#save-point").unbind("click").click(function() {
-    var pointName = $("#new-point-name").val();
-    var pointDescription = $("#new-point-description").val();
-    var pointType = $("#add-point-modal input[name=pointType]:checked").val();
+    var $type = $("#add-point-modal input[name=pointType]:checked");
+    var pointName = $name.val();
+    var pointDesc = $desc.val();
+    var pointType = $type.val();
 
-    pointDescription = "<div><h3>" + pointName + "</h3><span>" + pointType + "</span><p>" + pointDescription + "</p></div>";
+    $name.val('');
+    $desc.val('');
+    $type.prop("checked", false);
+
+    pointDesc = "<div><h3>" + pointName + "</h3><span>" + pointType + "</span><p>" + pointDesc + "</p></div>";
 
     marker.setTitle(pointName);
-    addMarker(marker, pointType, pointDescription);
+    addMarker(marker, pointType, pointDesc);
     // TODO: call backend services to store the point
   });
 }
@@ -96,8 +109,6 @@ function loadMarkers(jsonMarkers) {
 }
 
 function addMarker(marker, type, description) {
-  console.log(markers)
-  console.log(type)
   markers[type].push(marker);
 
   // Setup the click event listener for the Marker:
