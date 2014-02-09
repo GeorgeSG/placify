@@ -12,6 +12,14 @@ module Placify
     set :public_folder, File.expand_path(settings.public_path, __FILE__)
 
     enable :sessions
+
+    configure :development do
+      Mongoid.configure do
+        name = 'placify'
+        host = 'localhost'
+      end
+    end
+
   end
 end
 
@@ -23,7 +31,6 @@ controllers = [
   Placify::MainController,
   Placify::PlacesController,
 ]
-
 
 controllers.each do |controller|
   map(controller::NAMESPACE) { run controller }

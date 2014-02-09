@@ -6,6 +6,8 @@ gem 'sinatra', '~>1.4', require: 'sinatra/base'
 gem 'sinatra-contrib', '~>1.4'
 gem 'mongoid'
 gem 'bson_ext'
+# gem 'sinatra-simple-navigation'
+# gem 'simple-navigation-bootstrap'
 
 group :development do
   gem 'awesome_print', require: false
