@@ -28,7 +28,7 @@
     _m.event.addListener(map, 'center_changed', function() {});
 
     _m.event.addListener(map, 'click', function(event) {
-        placeMarker(map, event.latLng, "New Point", true);
+        var marker = placeMarker(map, event.latLng, "New Point", true);
     });
 
     $.getJSON("/mock/points.json", function(json) {
@@ -39,8 +39,8 @@
 
     function loadMarkers(markers) {
       $.each(markers, function(index, element) {
-        position = latLng(element.lat, element.lng);
-        var marker = placeMarker(map, position, element.name, true);
+        var position = latLng(element.lat, element.lng);
+        var marker   = placeMarker(map, position, element.name, true);
 
         _m.event.addListener(marker, 'click', function() {
           infoWindow.close();

@@ -3,6 +3,7 @@ function placeMarker(map, position, title, draggable) {
       map: map,
       position: position,
       title: title,
+      animation: google.maps.Animation.DROP,
       draggable: draggable || false
   });
 
