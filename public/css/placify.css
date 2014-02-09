@@ -23,4 +23,20 @@ li > a > i {
   padding-right: 6px;
 }
 
-#map-canvas { height: 600px }
+#map-canvas { height: 600px; width: 90%; display: inline-block }
+
+#point-types {
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: top;
+}
+
+#point-types > ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+#point-types input {
+  margin-top: -1px;
+}

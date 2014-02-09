@@ -1,18 +1,39 @@
 {
   "markers": [
     {
-      "name": "test",
-      "type": "fuck",
-      "description": "<div id='container'><h3>Test</h3><p>test</p></div>",
+      "name": "DA HOUSE",
+      "type": "restaurant",
+      "description": "<div id='container'><h3>DA HOUSE</h3><span>Restaurant</span><p>test</p></div>",
       "lat": 42.696,
       "lng": 23.342
     },
     {
-      "name": "tets2",
-      "type": "fuck",
-      "description": "<div id='container'><h3>Test2</h3><p>test2</p></div>",
+      "name": "О Шипка",
+      "type": "restaurant",
+      "description": "<div id='container'><h3>О Шипка</h3><span>Restaurant</span><p>test2</p></div>",
       "lat": 42.697,
       "lng": 23.324
+    },
+    {
+      "name": "Аптека",
+      "type": "pharmacy",
+      "description": "<div id='container'><h3>Аптека</h3><span>Pharmacy</span><p>test2</p></div>",
+      "lat": 42.657,
+      "lng": 23.354
+    },
+    {
+      "name": "Моята Аптека",
+      "type": "pharmacy",
+      "description": "<div id='container'><h3>Моята Аптека</h3><span>Pharmacy</span><p>test2</p></div>",
+      "lat": 42.627,
+      "lng": 23.394
+    },
+    {
+      "name": "Кино Арена",
+      "type": "cinema",
+      "description": "<div id='container'><h3>Кино Арена</h3><span>Cinema</span><p>test2</p></div>",
+      "lat": 42.671,
+      "lng": 23.374
     }
   ]
 }

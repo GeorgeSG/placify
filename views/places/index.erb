@@ -2,30 +2,18 @@
 <script type="text/javascript" src="js/map-helpers.js"></script>
 <script type="text/javascript">
   _m = google.maps;
+  markers = {};
+  infoWindow = new _m.InfoWindow();
 
   function initialize() {
-    var $window = $(window);
     var $canvas = $("#map-canvas");
 
-    function resizeCanvas() {
-      $canvas.height($(window).height() - 160);
-    }
-
-    resizeCanvas();
-
-    $window.resize(function() {
-      resizeCanvas();
-    });
-
     var mapOptions = {
-        center: latLng(42.695, 23.347),
-        zoom: 12
+      center: latLng(42.695, 23.347),
+      zoom: 12
     };
 
-    map        = new _m.Map($canvas[0], mapOptions);
-    infoWindow = new _m.InfoWindow();
-
-    _m.event.addListener(map, 'center_changed', function() {});
+    map = new _m.Map($canvas[0], mapOptions);
 
     _m.event.addListener(map, 'click', function(event) {
         var marker = placeMarker(map, event.latLng, "New Point", true);
@@ -37,10 +25,19 @@
       console.log('Failed Loading JSON!');
     });
 
-    function loadMarkers(markers) {
-      $.each(markers, function(index, element) {
+    function loadMarkers(jsonMarkers) {
+      var types = $.map(jsonMarkers, function(marker, index) {
+          return marker.type;
+      })
+      types = $.unique(types);
+      $.each(types, function(index, type) {
+        markers[type] = []
+      });
+
+      $.each(jsonMarkers, function(index, element) {
         var position = latLng(element.lat, element.lng);
         var marker   = placeMarker(map, position, element.name, true);
+        markers[element.type].push(marker)
 
         _m.event.addListener(marker, 'click', function() {
           infoWindow.close();
@@ -56,7 +53,55 @@
     }
   }
 
+  $(function() {
+    var $window = $(window);
+    var $canvas = $("#map-canvas");
+
+    function resizeCanvas() {
+      $canvas.height($(window).height() - 160);
+    }
+
+    resizeCanvas();
+
+    $window.resize(function() {
+      resizeCanvas();
+    });
+
+    $("#point-types input[type='checkbox']").click(function() {
+      var $this = $(this);
+      var checked = $this.is(':checked');
+
+      if (markers[this.value] !== undefined) {
+        $.each(markers[this.value], function(index, marker) {
+          marker.setVisible(checked);
+        });
+
+        infoWindow.close();
+      }
+    })
+  })
+
   _m.event.addDomListener(window, 'load', initialize);
 </script>
 
 <div id="map-canvas"></div>
+<div id="point-types">
+  <h3>Point Types</h3>
+  <ul>
+    <li>
+      <label>
+        <input type="checkbox" value="pharmacy" checked="checked" /> Pharmacies
+      </label>
+    </li>
+    <li>
+      <label>
+        <input type="checkbox" value="restaurant" checked="checked" /> Restaurants
+      </label>
+    </li>
+    <li>
+      <label>
+        <input type="checkbox" value ="cinema" checked="checked" /> Cinemas
+      </label>
+    </li>
+  </ul>
+</div>
