@@ -2,11 +2,6 @@
 defaultCategories = {};
 userCategories = {};
 
-// Hardcode Init until server is ready
-userCategories['billiard'] = [];
-userCategories['snooker'] = [];
-userCategories['darts'] = [];
-
 // Alias for the google.maps Object
 _m = google.maps;
 
@@ -30,7 +25,6 @@ _m.event.addDomListener(window, 'load', loadMap);
  * Initializes the map and loads all points
  */
 function loadMap() {
-  // Create Map
   map = new _m.Map(document.getElementById("map-canvas"), mapOptions);
 
   // Setup the click event listener for the Map:
@@ -49,17 +43,17 @@ function loadMap() {
   // TODO: Call backend services
   $.getJSON("/mock/points.json", function(json) {
       loadMarkers(json.markers, 'default');
-  }).fail(function() {
-    console.log('Failed Loading JSON!');
-  });
+  }).fail(onJSONFail);
 
   // Get All User Points and load them as markers on the Map.
   // TODO: Call backend services
   $.getJSON("/mock/userPoints.json", function(json) {
       loadMarkers(json.markers, 'user');
-  }).fail(function() {
+  }).fail(onJSONFail);
+
+  function onJSONFail() {
     console.log('Failed Loading JSON!');
-  });
+  }
 }
 
 /**
