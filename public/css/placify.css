@@ -23,9 +23,14 @@ li > a > i {
   padding-right: 6px;
 }
 
-#map-canvas { height: 600px; width: 90%; display: inline-block }
+#map-canvas {
+  height: 600px;
+  width: 85%;
+  display: inline-block
+}
 
 #point-types {
+  width: 10%;
   display: inline-block;
   margin-left: 10px;
   vertical-align: top;
