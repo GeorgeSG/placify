@@ -48,7 +48,15 @@ function loadMap() {
   // Get All Public Points and load them as markers on the Map.
   // TODO: Call backend services
   $.getJSON("/mock/points.json", function(json) {
-      loadMarkers(json.markers);
+      loadMarkers(json.markers, 'default');
+  }).fail(function() {
+    console.log('Failed Loading JSON!');
+  });
+
+  // Get All User Points and load them as markers on the Map.
+  // TODO: Call backend services
+  $.getJSON("/mock/userPoints.json", function(json) {
+      loadMarkers(json.markers, 'user');
   }).fail(function() {
     console.log('Failed Loading JSON!');
   });
@@ -100,17 +108,22 @@ function addNewPoint(event) {
  *
  * Groups markers by type and adds them to the markers hash
  */
-function loadMarkers(jsonMarkers) {
+function loadMarkers(jsonMarkers, group) {
   var types = $.map(jsonMarkers, function(marker, _) { return marker.type; });
   types = $.unique(types);
-
-  $.each(types, function(_, type) { defaultCategories[type] = [] });
+  $.each(types, function(_, type) {
+    if (group == 'user') {
+      userCategories[type] = [];
+    } else {
+      defaultCategories[type] = [];
+    }
+  });
 
   $.each(jsonMarkers, function(_, element) {
     var position = latLng(element.lat, element.lng);
     var marker   = placeMarker(map, position, element.name, true);
 
-    addMarker(marker, 'default', element.type, element.description);
+    addMarker(marker, group, element.type, element.description);
   });
 }
 
@@ -135,7 +148,7 @@ function addMarker(marker, group, type, description) {
     // TODO: call backend services - persist new position
     console.log('marker position changed to:');
     console.log(marker.getPosition());
-  })
+  });
 }
 
 /**

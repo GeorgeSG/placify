@@ -1,0 +1,25 @@
+{
+  "markers": [
+    {
+      "name": "BSD",
+      "type": "snooker",
+      "description": "<div id='container'><h3>BSD</h3><span>Snooker Club</span><p>test</p></div>",
+      "lat": 42.681,
+      "lng": 23.345
+    },
+    {
+      "name": "BSD 2",
+      "type": "darts",
+      "description": "<div id='container'><h3>BSD 2</h3><span>Darts</span><p>test2</p></div>",
+      "lat": 42.692,
+      "lng": 23.328
+    },
+    {
+      "name": "Playground",
+      "type": "billiard",
+      "description": "<div id='container'><h3>Playground</h3><span>Billiard Club</span><p>test2</p></div>",
+      "lat": 42.647,
+      "lng": 23.364
+    }
+  ]
+}
