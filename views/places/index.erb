@@ -26,12 +26,12 @@
     });
 
     function loadMarkers(jsonMarkers) {
-      var types = $.map(jsonMarkers, function(marker, index) { return marker.type; });
+      var types = $.map(jsonMarkers, function(marker, _) { return marker.type; });
       types     = $.unique(types);
 
-      $.each(types, function(index, type) { markers[type] = [] });
+      $.each(types, function(_, type) { markers[type] = [] });
 
-      $.each(jsonMarkers, function(index, element) {
+      $.each(jsonMarkers, function(_, element) {
         var position = latLng(element.lat, element.lng);
         var marker   = placeMarker(map, position, element.name, true);
         markers[element.type].push(marker);
@@ -73,7 +73,7 @@
       var type    = this.value;
 
       if (markers[type] !== undefined) {
-        $.each(markers[type], function(index, marker) {
+        $.each(markers[type], function(_, marker) {
           marker.setVisible(checked);
         });
 
