@@ -1,24 +1,24 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBecQFBm2kABATZyBg_qg-E7DgurxYhxE0&sensor=false"></script>
 <script type="text/javascript" src="js/map-helpers.js"></script>
+
 <script type="text/javascript">
-  _m = google.maps;
-  markers = {};
+  _m         = google.maps;
+  markers    = {};
   infoWindow = new _m.InfoWindow();
 
-  function initialize() {
-    var $canvas = $("#map-canvas");
-
+  function loadMap() {
     var mapOptions = {
       center: latLng(42.695, 23.347),
       zoom: 12
     };
 
-    map = new _m.Map($canvas[0], mapOptions);
+    map = new _m.Map(document.getElementById("map-canvas"), mapOptions);
 
     _m.event.addListener(map, 'click', function(event) {
         var marker = placeMarker(map, event.latLng, "New Point", true);
     });
 
+    // TODO: Call backend services
     $.getJSON("/mock/points.json", function(json) {
         loadMarkers(json.markers);
     }).fail(function() {
@@ -26,18 +26,15 @@
     });
 
     function loadMarkers(jsonMarkers) {
-      var types = $.map(jsonMarkers, function(marker, index) {
-          return marker.type;
-      })
-      types = $.unique(types);
-      $.each(types, function(index, type) {
-        markers[type] = []
-      });
+      var types = $.map(jsonMarkers, function(marker, index) { return marker.type; });
+      types     = $.unique(types);
+
+      $.each(types, function(index, type) { markers[type] = [] });
 
       $.each(jsonMarkers, function(index, element) {
         var position = latLng(element.lat, element.lng);
         var marker   = placeMarker(map, position, element.name, true);
-        markers[element.type].push(marker)
+        markers[element.type].push(marker);
 
         _m.event.addListener(marker, 'click', function() {
           infoWindow.close();
@@ -46,12 +43,15 @@
         });
 
         _m.event.addListener(marker, 'dragend', function() {
+          // TODO: call backend services
           console.log('marker position changed to:');
           console.log(marker.getPosition());
         })
       });
     }
   }
+
+  _m.event.addDomListener(window, 'load', loadMap);
 
   $(function() {
     var $window = $(window);
@@ -68,20 +68,19 @@
     });
 
     $("#point-types input[type='checkbox']").click(function() {
-      var $this = $(this);
+      var $this   = $(this);
       var checked = $this.is(':checked');
+      var type    = this.value;
 
-      if (markers[this.value] !== undefined) {
-        $.each(markers[this.value], function(index, marker) {
+      if (markers[type] !== undefined) {
+        $.each(markers[type], function(index, marker) {
           marker.setVisible(checked);
         });
 
         infoWindow.close();
       }
-    })
-  })
-
-  _m.event.addDomListener(window, 'load', initialize);
+    });
+  });
 </script>
 
 <div id="map-canvas"></div>
