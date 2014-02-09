@@ -1,5 +1,6 @@
 // Hash that will hold all markers, grouped by type
-markers = {};
+defaultCategories = {};
+userCategories = {};
 
 // Alias for the google.maps Object
 _m = google.maps;
@@ -37,7 +38,7 @@ function loadMap() {
   var homeControl    = new HomeControl(homeControlDiv, map, home);
 
   homeControlDiv.index = 1;
-  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
+  map.controls[_m.ControlPosition.TOP_RIGHT].push(homeControlDiv);
 
   // Get All Public Points and load them as markers on the Map.
   // TODO: Call backend services
@@ -98,7 +99,7 @@ function loadMarkers(jsonMarkers) {
   var types = $.map(jsonMarkers, function(marker, _) { return marker.type; });
   types = $.unique(types);
 
-  $.each(types, function(_, type) { markers[type] = [] });
+  $.each(types, function(_, type) { defaultCategories[type] = [] });
 
   $.each(jsonMarkers, function(_, element) {
     var position = latLng(element.lat, element.lng);
@@ -109,7 +110,7 @@ function loadMarkers(jsonMarkers) {
 }
 
 function addMarker(marker, type, description) {
-  markers[type].push(marker);
+  defaultCategories[type].push(marker);
 
   // Setup the click event listener for the Marker:
   // Show the infoWindow with information about the selected marker
@@ -147,13 +148,13 @@ $(function() {
   });
 
   // Handle filtering of markers via the checkboxes
-  $("#sidebar input[type=checkbox]").click(function() {
+  $("#default-categories input[type=checkbox]").click(function() {
     var $this   = $(this);
     var checked = $this.is(':checked');
     var type    = this.value;
 
-    if (markers[type] !== undefined) {
-      $.each(markers[type], function(_, marker) {
+    if (defaultCategories[type] !== undefined) {
+      $.each(defaultCategories[type], function(_, marker) {
         marker.setVisible(checked);
       });
 
