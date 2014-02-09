@@ -14,7 +14,8 @@ home = latLng(42.695, 23.347);
 // Initial Map Options
 mapOptions = {
   center: home,
-  zoom: 12
+  zoom: 12,
+  minZoom: 3
 };
 
 // Call initial map-loading logic
