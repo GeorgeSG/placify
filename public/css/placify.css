@@ -42,6 +42,10 @@ li > a > i {
   list-style-type: none;
 }
 
-#sidebar input {
+input[type='checkbox'], input[type='radio'] {
   margin-top: -1px;
+}
+
+.modal textarea {
+  width: 98%;
 }

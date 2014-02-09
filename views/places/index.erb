@@ -5,7 +5,7 @@
 
 <div id="map-canvas"></div>
 <div id="sidebar">
-  <h3>Point Types</h3>
+  <h3>Categories</h3>
   <ul>
     <li>
       <label>
@@ -23,4 +23,26 @@
       </label>
     </li>
   </ul>
+</div>
+<div id="add-point-modal" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close discard-point" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Add New Point</h3>
+  </div>
+  <div class="modal-body">
+    <form>
+      <label for="new-point-name">Point Name:</label>
+      <input type="text" id="new-point-name" placeholder="The Eiffel Tower" />
+      <label>Category:</label>
+      <label><input type="radio" name="pointType" value="restaurant" /> Restaurant</label>
+      <label><input type="radio" name="pointType" value="pharmacy" /> Pharmacy</label>
+      <label><input type="radio" name="pointType" value="cinema" /> Cinema</label>
+      <label for="new-point-description">Short Description:</label>
+      <textarea id="new-point-description"></textarea>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" class="btn discard-point">Close</a>
+    <a href="#" data-dismiss="modal" id="save-point" class="btn btn-primary">Save changes</a>
+  </div>
 </div>
