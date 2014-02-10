@@ -6,15 +6,18 @@ module Placify
 
   class Base < Sinatra::Base
     use Rack::Flash
+    register Sinatra::ConfigFile
+    register Sinatra::Partial
+
     helpers Sinatra::RedirectWithFlash
 
     enable :sessions
 
-    register Sinatra::ConfigFile
     config_file 'config/config.yml'
 
     set :views,         File.expand_path(settings.views_path,  __FILE__)
     set :public_folder, File.expand_path(settings.public_path, __FILE__)
+    set :partial_template_engine, :erb
 
     Mongoid.load!(File.expand_path(File.join("config", "mongoid.yml")))
   end
