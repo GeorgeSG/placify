@@ -18,14 +18,24 @@
         <li><a href="/places/">Places</a></li>
         <li><a href="/about">About</a></li>
       </ul>
-      <form class="navbar-form pull-right">
-        <input type="text" class="span2" placeholder="Username" />
-        <input type="password" class="span2" placeholder="Password" />
-        <input type="submit" value="Login" class="btn btn-primary" />
-      </form>
+      <ul class="nav pull-right">
+      <% if logged? %>
+        <li><a href="/logout">Logout</a></lI>
+      <% else %>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">Signup</a></li>
+      <% end %>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
+    <% %w[error success warning info].each do |key| %>
+      <% if flash[key] %>
+        <div class="alert alert-<%= key %>">
+          <%= flash[key] %>
+        </div>
+      <% end %>
+    <% end %>
    <%= yield %>
   </div>
   <div id="footer">

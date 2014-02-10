@@ -1,0 +1,29 @@
+development:
+  sessions:
+    default:
+      database: placify_development
+      hosts:
+        - localhost:27017
+      options:
+        consistency: strong
+
+test:
+  sessions:
+    default:
+      database: placify_test
+      hosts:
+        - localhost:27017
+      options:
+        consistency: strong
+
+production:
+  sessions:
+    default:
+      uri: <%= ENV['MONGOHQ_URL'] %>
+    username: <%= ENV['MONGOHQ_USERNAME'] %>
+    password: <%= ENV['MONGOHQ_PASSWORD'] %>
+    database: placify_production
+    options:
+      skip_version_check: true
+      safe: true
+      consistency: strong

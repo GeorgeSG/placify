@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="span12">
+    <h3>Signup</h3>
+    <div class="well">
+      <ul class="nav nav-tabs">
+        <li><a href="/login">Login</a></li>
+        <li class="active"><a href="#">Create Account</a></li>
+      </ul>
+      <div id="myTabContent" class="tab-content">
+        <div class="tab-pane active in" id="create">
+          <form class="form-horizontal" action="/signup" method="POST">
+            <div class="control-group">
+              <label class="control-label" for="username">Username</label>
+              <div class="controls">
+                <input type="text" id="username" name="username" class="input-xlarge" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="password">Password</label>
+              <div class="controls">
+                <input type="password" id="password" name="password" class="input-xlarge" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="confirm_password">Confirm Password</label>
+              <div class="controls">
+                <input type="password" id="confirm_password" name="confirm_password" class="input-xlarge" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="first_name">First Name</label>
+              <div class="controls">
+                <input type="text" id="first_name" name="first_name" class="input-xlarge" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="last_name">Last Name</label>
+              <div class="controls">
+                <input type="text" id="last_name" name="last_name" class="input-xlarge" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="email">Email</label>
+              <div class="controls">
+                <input type="text" id="email" name="email" class="input-xlarge" />
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="controls">
+                <input type="submit" value="Create Account" class="btn btn-primary" />
+              </div>
+            </div>
+          </form>
+        </div>
+    </div>
+  </div>
+</div>
