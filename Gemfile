@@ -3,11 +3,14 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 gem 'sinatra', '~>1.4', require: 'sinatra/base'
-gem 'sinatra-contrib', '~>1.4'
+gem 'sinatra-contrib', '~> 1.4'
+
 gem 'mongoid'
 gem 'bson_ext'
-# gem 'sinatra-simple-navigation'
-# gem 'simple-navigation-bootstrap'
+gem "bcrypt-ruby", "~> 3.1.2", require: 'bcrypt'
+
+gem "rack-flash3", "~> 1.0.5",     require: 'rack-flash'
+gem 'sinatra-redirect-with-flash', require: 'sinatra/redirect_with_flash'
 
 group :development do
   gem 'awesome_print', require: false
@@ -16,5 +19,4 @@ group :development do
 end
 
 group :production do
-
 end

@@ -93,6 +93,7 @@ function addNewPoint(event) {
 
     marker.setTitle(pointName);
     addMarker(marker, 'user', pointType, pointDesc);
+    // TODO: add double click event to remove point
     // TODO: call backend services to store the point
   });
 }
