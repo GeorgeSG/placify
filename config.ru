@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'bundler/setup'
 
-
 module Placify
   Bundler.require :default
 

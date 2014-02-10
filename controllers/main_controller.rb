@@ -4,7 +4,6 @@ module Placify
 
     helpers UserHelpers
 
-
     get '/' do
       erb :'home/index'
     end

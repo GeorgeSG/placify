@@ -23,24 +23,26 @@
       </label>
     </li>
   </ul>
-  <h3>Your Categories</h3>
-  <ul id="user-categories">
-    <li>
-      <label>
-        <input type="checkbox" value="billiard" checked="checked" /> Billiard Clubs
-      </label>
-    </li>
-    <li>
-      <label>
-        <input type="checkbox" value="snooker" checked="checked" /> Snooker Clubs
-      </label>
-    </li>
-    <li>
-      <label>
-        <input type="checkbox" value="darts" checked="checked" /> Darts
-      </label>
-    </li>
-  </ul>
+  <% if logged? %>
+    <h3>Your Categories</h3>
+    <ul id="user-categories">
+      <li>
+        <label>
+          <input type="checkbox" value="billiard" checked="checked" /> Billiard Clubs
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" value="snooker" checked="checked" /> Snooker Clubs
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" value="darts" checked="checked" /> Darts
+        </label>
+      </li>
+    </ul>
+  <% end %>
 </div>
 <div id="add-point-modal" class="modal hide fade">
   <div class="modal-header">
