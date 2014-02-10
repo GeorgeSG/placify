@@ -1,6 +1,6 @@
 module Placify
   class PlacesController < Base
-    NAMESPACE = '/places'
+    NAMESPACE = '/places'.freeze
 
     helpers UserHelpers
 

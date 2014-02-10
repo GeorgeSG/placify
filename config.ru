@@ -30,6 +30,7 @@ Dir.glob('./controllers/**/*.rb').each { |controller| require controller }
 controllers = [
   Placify::MainController,
   Placify::PlacesController,
+  Placify::AuthController,
 ]
 
 controllers.each do |controller|
