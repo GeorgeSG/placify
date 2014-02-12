@@ -14,6 +14,8 @@ gem 'sinatra-redirect-with-flash', require: 'sinatra/redirect_with_flash'
 gem 'sinatra-partial', require: 'sinatra/partial'
 
 
+gem 'json'
+
 group :development do
   gem 'awesome_print', require: false
   gem 'rerun',         require: false

@@ -37,9 +37,10 @@ Dir.glob('./helpers/**/*.rb').each     { |helper| require helper }
 Dir.glob('./controllers/**/*.rb').each { |controller| require controller }
 
 controllers = [
+  Placify::AuthController,
+  Placify::JSONController,
   Placify::MainController,
   Placify::PlacesController,
-  Placify::AuthController,
 ]
 
 controllers.each do |controller|

@@ -1,4 +1,4 @@
-class Poi
+class POI
   include Mongoid::Document
   field :name,        type: String
   field :lat,         type: Float
