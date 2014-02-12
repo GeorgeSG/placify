@@ -7,5 +7,9 @@ module Placify
     get '/' do
       erb :'places/index'
     end
+
+    get '/test', auth: :logged do
+      erb 'you are logged!'
+    end
   end
 end

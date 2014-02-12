@@ -1,12 +1,12 @@
-class Poi
+class POI
   include Mongoid::Document
-  field :name, type: String
-  field :type, type: String
+  field :name,        type: String
+  field :type,        type: String
   field :description, type: String
-  field :lng, type: Float
-  field :lat, type: Float
-  field :rating, type: Float, default: 0.0
-  field :shedule, type: Hash
+  field :lng,         type: Float
+  field :lat,         type: Float
+  field :rating,      type: Float, default: 0.0
+  field :shedule,     type: Hash
 
   has_and_belongs_to_many :extras
 
@@ -24,3 +24,4 @@ end
 class UserPoi < Poi
   embedded_in :users
 end
+

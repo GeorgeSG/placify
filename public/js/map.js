@@ -42,15 +42,15 @@ function loadMap() {
 
   // Get All Public Points and load them as markers on the Map.
   // TODO: Call backend services
-  $.getJSON("/mock/points.json", function(json) {
+  $.getJSON("/json/points.json", function(json) {
       loadMarkers(json.markers, 'default');
   }).fail(onJSONFail);
 
   // Get All User Points and load them as markers on the Map.
   // TODO: Call backend services
-  $.getJSON("/mock/userPoints.json", function(json) {
-      loadMarkers(json.markers, 'user');
-  }).fail(onJSONFail);
+  // $.getJSON("/mock/userPoints.json", function(json) {
+  //     loadMarkers(json.markers, 'user');
+  // }).fail(onJSONFail);
 
   function onJSONFail() {
     console.log('Failed Loading JSON!');
@@ -125,8 +125,16 @@ function loadMarkers(jsonMarkers, group) {
 
 function addMarker(marker, group, type, description) {
   if (group == 'user') {
+    if (userCategories[type] === undefined) {
+      userCategories[type] = []
+    }
+
     userCategories[type].push(marker);
   } else {
+    if (defaultCategories[type] === undefined) {
+      defaultCategories[type] = []
+    }
+
     defaultCategories[type].push(marker);
   }
 
