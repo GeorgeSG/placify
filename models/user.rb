@@ -8,7 +8,7 @@ class User
   field :last_name,  type: String
 
   has_and_belongs_to_many :pois, inverse_of: nil
-  embeds_many :userPois
+  embeds_many :userPOIs
 
   validates_presence_of :username, message: 'You must provide an email for username'
   validates_presence_of :password, message: 'You must provide a password'
@@ -17,8 +17,8 @@ class User
 
   validates_uniqueness_of :username, message: 'A user with this username already exists'
 
-  #validates :password, length: { minimum: 6, maximum: 16 } 
-  #too_short: 'the password must be between 6 and 16 symbols', 
+  #validates :password, length: { minimum: 6, maximum: 16 }
+  #too_short: 'the password must be between 6 and 16 symbols',
   #too_long: 'the password must be between 6 and 16 symbols'
 
   index({ username: 1 }, { unique: true, name: "username_index" })

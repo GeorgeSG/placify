@@ -21,7 +21,7 @@ class POI
   #index({  }, { min: -200, max: 200 })
 end
 
-class UserPoi < Poi
-  embedded_in :users
+class UserPOI < POI
+  embedded_in :user
 end
 

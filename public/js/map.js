@@ -41,14 +41,12 @@ function loadMap() {
   map.controls[_m.ControlPosition.TOP_RIGHT].push(homeControlDiv);
 
   // Get All Public Points and load them as markers on the Map.
-  // TODO: Call backend services
   $.getJSON("/json/points.json", function(json) {
       loadMarkers(json.markers, 'default');
   }).fail(onJSONFail);
 
   // Get All User Points and load them as markers on the Map.
-  // TODO: Call backend services
-  // $.getJSON("/mock/userPoints.json", function(json) {
+  // $.getJSON("/mock/userPoints.json/:id", function(json) {
   //     loadMarkers(json.markers, 'user');
   // }).fail(onJSONFail);
 
