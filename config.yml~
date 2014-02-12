@@ -1,3 +1,0 @@
-views_path:  '../views'
-public_path: '../public'
-mongoid_yml_path : '../mongoid.yml'
