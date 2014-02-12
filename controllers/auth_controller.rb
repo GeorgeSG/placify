@@ -19,7 +19,7 @@ module Placify
         redirect NAMESPACE + '/login', error: 'Please enter both username and password!'
       end
 
-      user = User.where(username: username)
+      user = User.where(username: username).first
       puts "#{user[:first_name]}"
 
       if user.nil?
