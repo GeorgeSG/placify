@@ -1,6 +1,5 @@
 require './fake_helpers'
 
-
 UserPOI.delete_all
 
 types = ['pharmacy', 'restaurant', 'hotel', 'billiard', 'snooker', 'casino', 'supermarket', 'cinema', 'bookstore', 'mall']
