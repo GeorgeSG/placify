@@ -12,15 +12,11 @@ module Placify
       username = params[:username]
       password = params[:password]
 
-      puts username
-      puts password
-
       if username.empty? || password.empty?
         redirect NAMESPACE + '/login', error: 'Please enter both username and password!'
       end
 
       user = User.where(username: username).first
-      puts "#{user[:first_name]}"
 
       if user.nil?
         redirect NAMESPACE + '/login', error: 'There is no such user in our database!'
@@ -51,8 +47,6 @@ module Placify
       first_name       = params[:first_name]
       last_name        = params[:last_name]
 
-
-
       if password != confirm_password
         flash[:error] = 'The two passwords do not match. Please try again!'
         redirect NAMESPACE + '/signup'
@@ -70,9 +64,7 @@ module Placify
       unless user.valid?
         flash[:error] = user.errors.values.join("\n")
         redirect NAMESPACE + '/signup'
-        #p user.errors.to_a.join(' ')
       end
-
 
       flash[:success] = 'You have registered succesfully!'
       redirect NAMESPACE + '/login'
