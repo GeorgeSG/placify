@@ -18,6 +18,6 @@ POI.delete_all
     name: name,
     lat: Faker::Address.latitude,
     lng: Faker::Address.longitude,
-    description: "<h3>#{name}</h3><p>#{desc}"
+    description: "<h3>#{name}</h3><p>#{desc}</p>"
   )
 end
