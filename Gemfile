@@ -20,6 +20,8 @@ group :development do
   gem 'awesome_print', require: false
   gem 'rerun',         require: false
   gem 'pry',           require: false
+  gem 'faker',          require: false
+  gem 'mongo',         require: false
 end
 
 group :production do
