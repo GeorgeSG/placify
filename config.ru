@@ -20,6 +20,15 @@ module Placify
     set :partial_template_engine, :erb
 
     Mongoid.load!(File.expand_path(File.join("config", "mongoid.yml")))
+
+    register do
+      def auth (type)
+        condition do
+          flash[:info] = 'You need to be logged in to access this page.'
+          redirect "auth/login" unless send("#{type}?")
+        end
+      end
+    end
   end
 end
 
