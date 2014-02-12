@@ -28,6 +28,28 @@ _m.event.addDomListener(window, 'load', loadMap);
 function loadMap() {
   map = new _m.Map(document.getElementById("map-canvas"), mapOptions);
 
+  // Get All Public Points and load them as markers on the Map.
+  $.getJSON("/json/points.json", function(json) {
+      loadMarkers(json.markers, 'default');
+  });
+
+  // Get All Types of Points listed in the database
+  $.getJSON("/json/types.json", function(json) {
+    loadTypes("#default-categories", json.types);
+
+  });
+
+  $.getJSON("/json/loggedUser.json", function(json) {
+    if (json.id !== null) {
+      enableUserInterface(map, json.id);
+    }
+  });
+}
+
+/**
+ * All code loading custom user logic
+ */
+function enableUserInterface(map, user_id) {
   // Setup the click event listener for the Map:
   // Add a new marker on the clicked location
   _m.event.addListener(map, 'click', addNewPoint);
@@ -40,19 +62,14 @@ function loadMap() {
   homeControlDiv.index = 1;
   map.controls[_m.ControlPosition.TOP_RIGHT].push(homeControlDiv);
 
-  // Get All Public Points and load them as markers on the Map.
-  $.getJSON("/json/points.json", function(json) {
-      loadMarkers(json.markers, 'default');
-  }).fail(onJSONFail);
-
   // Get All User Points and load them as markers on the Map.
-  // $.getJSON("/mock/userPoints.json/:id", function(json) {
-  //     loadMarkers(json.markers, 'user');
-  // }).fail(onJSONFail);
+  $.getJSON("/json/userPoints.json/" + user_id, function(json) {
+    loadMarkers(json.markers, 'user');
+  });
 
-  function onJSONFail() {
-    console.log('Failed Loading JSON!');
-  }
+  $.getJSON("/json/userTypes.json/" + user_id, function(json) {
+    loadTypes("#user-categories", json.types);
+  });
 }
 
 /**
@@ -93,6 +110,17 @@ function addNewPoint(event) {
     addMarker(marker, 'user', pointType, pointDesc);
     // TODO: add double click event to remove point
     // TODO: call backend services to store the point
+  });
+}
+
+/**
+ * Loads a set of Types represented as JSON and
+ * displays them in the sidebar.
+ */
+function loadTypes(listSelector, types) {
+  $list = $(listSelector);
+  $.each(types, function(_, type) {
+    $list.append("<li><label><input type='checkbox' value='" + type + "' checked='checked' /> " + type + "</label></li>");
   });
 }
 
@@ -172,7 +200,7 @@ $(function() {
   });
 
   // Handle filtering of markers via the checkboxes
-  $("#user-categories input[type=checkbox]").click(function() {
+  $("#user-categories").on("click", "input[type=checkbox]", function() {
     var $this   = $(this);
     var checked = $this.is(':checked');
     var type    = this.value;
@@ -187,7 +215,7 @@ $(function() {
   });
 
   // Handle filtering of markers via the checkboxes
-  $("#default-categories input[type=checkbox]").click(function() {
+  $("#default-categories").on("click", "input[type=checkbox]", function() {
     var $this   = $(this);
     var checked = $this.is(':checked');
     var type    = this.value;

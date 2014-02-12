@@ -21,6 +21,13 @@ module Placify
       {types: POI.all.map(&:type).uniq}.to_json
     end
 
+    get '/userTypes.json/:id' do
+      content_type :json
+
+      user = User.where(id: params[:id]).first
+      {types: user.userPOIs.map(&:type).uniq}.to_json
+    end
+
     get '/extras.json' do
       content_type :json
       {extras: Extra.all.map(*:name).uniq}.to_json
