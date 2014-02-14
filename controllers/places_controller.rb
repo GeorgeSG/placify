@@ -5,7 +5,6 @@ module Placify
     helpers UserHelpers
 
     get '/' do
-      #@types = 
       erb :'places/index'
     end
 

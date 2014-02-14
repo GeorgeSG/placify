@@ -22,6 +22,5 @@ module Placify
       @title = "#{ @user.first_name } #{ @user.last_name }"
       erb :'users/view'
     end
-
   end
 end

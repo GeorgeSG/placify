@@ -6,7 +6,7 @@ module Placify
 
     def admin?
       return false unless logged?
-      logged_user.admin 
+      logged_user.admin
     end
 
     def logged_user
