@@ -17,12 +17,13 @@
         <li><a href="/">Home</a></li>
         <li><a href="/places/">Places</a></li>
         <li><a href="/about">About</a></li>
+        <li><a href="/users">Users</a></li>
       </ul>
       <ul class="nav pull-right">
       <% if logged? %>
         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= logged_user.username %> <b class="caret"></b></a>
             <ul class="dropdown-menu">
-                <li><a href="/user/preferences"><i class="icon-cog"></i> Preferences</a></li>
+                <li><a href="/users/preferences"><i class="icon-cog"></i> Preferences</a></li>
                 <li class="divider"></li>
                 <li><a href="/auth/logout"><i class="icon-off"></i> Logout</a></li>
             </ul>
@@ -42,7 +43,10 @@
         </div>
       <% end %>
     <% end %>
-   <%= yield %>
+    <% unless @title.nil? %>
+      <h2><%= @title %></h2>
+    <% end %>
+    <%= yield %>
   </div>
   <div id="footer">
     <div class="container-fluid">

@@ -7,7 +7,7 @@ class User
   field :first_name, type: String
   field :last_name,  type: String
 
-  has_and_belongs_to_many :pois, inverse_of: nil
+  has_and_belongs_to_many :POIs, inverse_of: nil
   embeds_many :userPOIs
 
   validates_presence_of :username, message: 'You must provide an email for username'

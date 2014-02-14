@@ -5,6 +5,7 @@ module Placify
     helpers UserHelpers
 
     get '/login' do
+      @title = 'login'
       erb :'auth/login'
     end
 
@@ -37,6 +38,7 @@ module Placify
     end
 
     get '/signup' do
+      @title = 'signup'
       erb :'auth/signup'
     end
 
@@ -56,10 +58,10 @@ module Placify
       password_hash = BCrypt::Engine.hash_secret(params[:password], password_salt)
 
       user = User.create(username: username,
-                  password: password_hash,
-                  salt: password_salt,
-                  first_name: first_name,
-                  last_name: last_name)
+                         password: password_hash,
+                         salt: password_salt,
+                         first_name: first_name,
+                         last_name: last_name)
 
       unless user.valid?
         flash[:error] = user.errors.values.join("\n")
