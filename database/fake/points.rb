@@ -1,12 +1,12 @@
 require './fake_helpers'
 
-POI.delete_all
+Poi.delete_all
 
 100.times do
   name = Faker::Name.name
   desc = Faker::Lorem.paragraph(10)
-  type = POI.types.sample.to_s
-  POI.create(
+  type = Poi.types.sample.to_s
+  Poi.create(
     name: name,
     type: type,
     lat: Faker::Address.latitude,

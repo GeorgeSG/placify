@@ -9,7 +9,7 @@ module Placify
     end
 
     get '/:point_id' do
-      @point = POI.where(id: params[:point_id]).first
+      @point = Poi.where(id: params[:point_id]).first
       redirect '/', error: 'There is no such point in the database' if @point.nil?
 
       @title = @point.name
@@ -20,15 +20,28 @@ module Placify
       redirect NAMESPACE + '/search/' + params[:search_query]
     end
 
+    get '/search/type/:search_query' do
+      redirec '/' if params[:search_query].nil?
+
+      search_query = Regexp.new(params[:search_query], true)
+      @global_pois = Poi.or({type: search_query}).to_a
+
+      p @global_pois
+      unless logged_user.nil?
+        @user_pois = logged_user.userPois.or({type: search_query}).to_a
+      end
+
+      erb :'places/search'
+    end
     get '/search/:search_query' do
       redirec '/' if params[:search_query].nil?
 
       search_query = Regexp.new(params[:search_query], true)
-      @global_pois = POI.or({name: search_query}, {type: search_query}).to_a
+      @global_pois = Poi.or({name: search_query}, {type: search_query}).to_a
 
       p @global_pois
       unless logged_user.nil?
-        @user_pois = logged_user.userPOIs.or({name: search_query}, {type: search_query}).to_a
+        @user_pois = logged_user.userPois.or({name: search_query}, {type: search_query}).to_a
       end
 
       erb :'places/search'
