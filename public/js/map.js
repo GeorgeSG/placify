@@ -51,7 +51,7 @@ function loadMap() {
       enableUserInterface(map, json.id);
     }
   });
-  
+
 }
 
 /**
@@ -98,10 +98,11 @@ function addNewPoint(event, user_id) {
 
   infoWindow.close();
 
-  var marker = placeMarker(map, pointLatLng, "New Point", true);
-  var $name = $("#new-point-name");
-  var $desc = $("#new-point-description");
-  var $type = $("#new-point-type");
+  var marker  = placeMarker(map, pointLatLng, "New Point", true);
+  var $name   = $("#new-point-name");
+  var $desc   = $("#new-point-description");
+  var $type   = $("#new-point-type");
+  var $extras = $("#new-point-extras");
 
   $("#add-point-modal").modal("show");
 
@@ -111,6 +112,7 @@ function addNewPoint(event, user_id) {
     $name.val('');
     $desc.val('');
     $type.val('');
+    $extras.val('');
     $("#add-point-modal input[name=pointType]:checked").prop("checked", false);
   });
 
@@ -120,17 +122,17 @@ function addNewPoint(event, user_id) {
       lat:  pointLatLng.lat(),
       lng:  pointLatLng.lng(),
       desc: $desc.val(),
-      type: $type.val()
+      type: $type.val(),
+      extras: $extras.val()
     };
 
     $name.val('');
     $desc.val('');
     $type.val('');
+    $extras.val('');
 
     marker.setTitle(point.name);
     addMarker(marker, 'user', point);
-    // TODO: add double click event to remove point
-
     $.post('/json/addNewPoint/' + user_id, point);
   });
 }
@@ -178,12 +180,21 @@ function addMarker(marker, group, element) {
   var description;
 
   description = "<h3>";
-  if (group != 'user') {
+  if (group != 'user' && id !== undefined) {
     description += "<a href='/places/" + id + "'>" + name + "</a>";
   } else {
     description += name;
   }
   description += "</h3><span>" + type + "</span><p>" + element.description + "</p>";
+
+  if (element.schedule) {
+    description += "<p>Schedule:<br />"
+    description += "Monday: " + element.schedule.mon[0] + " - " + element.schedule.mon[1] + "<br />";
+    description += "Tuesday: " + element.schedule.tue[0] + " - " + element.schedule.tue[1] + "<br />";
+    description += "Wednesday: " + element.schedule.wed[0] + " - " + element.schedule.wed[1] + "<br />";
+    description += "Thursday: " + element.schedule.thu[0] + " - " + element.schedule.thu[1] + "<br />";
+    description += "Friday: " + element.schedule.fri[0] + " - " + element.schedule.fri[1] + "<br />";
+  }
 
   if (group == 'user') {
     if (userCategories[type] === undefined) {
@@ -217,9 +228,6 @@ function addMarker(marker, group, element) {
     element.lng = markerPosition.lng();
 
     $.post("/json/updatePoint/" + id, element);
-
-    console.log('marker position changed to:');
-    console.log(marker.getPosition());
   });
 }
 

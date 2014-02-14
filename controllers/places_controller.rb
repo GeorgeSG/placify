@@ -9,7 +9,7 @@ module Placify
     end
 
     get '/:point_id' do
-      @point = POI.where(id: params[:point_id]).first
+      @point = Poi.where(id: params[:point_id]).first
       redirect '/', error: 'There is no such point in the database' if @point.nil?
 
       @title = @point.name

@@ -6,7 +6,7 @@ module Placify
 
     get '/points.json' do
       content_type :json
-      {markers: POI.all}.to_json
+      {markers: Poi.all}.to_json
     end
 
     post '/updatePoint/:point_id' do
@@ -15,9 +15,9 @@ module Placify
 
       poi_hash = {id: params[:point_id]}
       if logged_user.admin
-        poi = POI.where(poi_hash).first
+        poi = Poi.where(poi_hash).first
       else
-        poi = logged_user.userPOIs.where(poi_hash).first
+        poi = logged_user.userPois.where(poi_hash).first
       end
 
       poi.name = params[:name];
@@ -35,6 +35,11 @@ module Placify
       user = User.where(id: params[:user_id]).first
       return nil if user.nil?
 
+      extras = params[:extras].split(',')
+      extras = extras.map do |extra|
+        Extra.find_or_create_by(name: extra)
+      end
+
       poi_hash = {name: params[:name],
                   type: params[:type],
                   lat: params[:lat],
@@ -42,10 +47,14 @@ module Placify
                   description: params[:desc]}
 
       if user.admin
-        poi = POI.new(poi_hash)
+        poi = Poi.new(poi_hash)
       else
-        poi = UserPOI.new(poi_hash)
+        poi = UserPoi.new(poi_hash)
         poi.user = user
+      end
+
+      extras.each do |extra|
+        extra.pois.push poi
       end
 
       poi.save
@@ -53,7 +62,7 @@ module Placify
     end
 
     post '/updateViews/:point_id' do
-      point = POI.where(id: params[:point_id]).first
+      point = Poi.where(id: params[:point_id]).first
       return nil if point.nil?
 
       point.views = point.views + 1
@@ -65,24 +74,32 @@ module Placify
       content_type :json
 
       user = User.where(id: params[:id]).first
-      {markers: user.userPOIs}.to_json
+      {markers: user.userPois}.to_json
     end
 
     get '/types.json' do
       content_type :json
-      {types: POI.all.map(&:type).uniq}.to_json
+      {types: Poi.all.map(&:type).uniq}.to_json
     end
 
     get '/userTypes.json/:id' do
       content_type :json
 
       user = User.where(id: params[:id]).first
-      {types: user.userPOIs.map(&:type).uniq}.to_json
+      {types: user.userPois.map(&:type).uniq}.to_json
     end
 
     get '/extras.json' do
       content_type :json
       {extras: Extra.all.map(&:name).uniq}.to_json
+    end
+
+    get '/extraByName/:extra_id' do
+      content_type :json
+      extra = Extra.where(name: params[:extra_id]).first
+      return nil if extra.nil?
+
+      {name: extra.name}.to_json
     end
 
     get '/loggedUser.json' do
