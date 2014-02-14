@@ -11,6 +11,6 @@ POI.delete_all
     type: type,
     lat: Faker::Address.latitude,
     lng: Faker::Address.longitude,
-    description: "<h3>#{name}</h3><span>#{type}<p>#{desc}</p>"
+    description: desc
   )
 end

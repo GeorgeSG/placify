@@ -8,14 +8,12 @@ module Placify
       erb :'places/index'
     end
 
-    get '/test', auth: :logged do
-      erb 'you are logged!'
+    get '/:point_id' do
+      @point = POI.where(id: params[:point_id]).first
+      redirect '/', error: 'There is no such point in the database' if @point.nil?
+
+      @title = @point.name
+      erb :'places/view'
     end
-
-    post '/addPoint' do
-
-    end
-
-
   end
 end

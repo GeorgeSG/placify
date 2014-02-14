@@ -28,12 +28,12 @@ _m.event.addDomListener(window, 'load', loadMap);
 function loadMap() {
   map = new _m.Map(document.getElementById("map-canvas"), mapOptions);
 
+  is_admin = false;
   // Checks if the user has admin privilegies
   $.getJSON("/json/adminUser.json", function(json) {
-      is_admin = false;
-      if (json.admin) {
-        is_admin = true;
-      }
+    if (json.admin) {
+      is_admin = true;
+    }
   });
 
   // Get All Public Points and load them as markers on the Map.
@@ -44,7 +44,6 @@ function loadMap() {
   // Get All Types of Points listed in the database
   $.getJSON("/json/types.json", function(json) {
     loadTypes("#default-categories", json.types);
-
   });
 
   $.getJSON("/json/loggedUser.json", function(json) {
@@ -52,7 +51,7 @@ function loadMap() {
       enableUserInterface(map, json.id);
     }
   });
-
+  
 }
 
 /**
@@ -61,7 +60,9 @@ function loadMap() {
 function enableUserInterface(map, user_id) {
   // Setup the click event listener for the Map:
   // Add a new marker on the clicked location
-  _m.event.addListener(map, 'click', addNewPoint);
+  _m.event.addListener(map, 'click', function(event) {
+    addNewPoint(event, user_id);
+  });
 
   // Create the DIV to hold the control and call the
   // HomeControl() constructor passing in this DIV.
@@ -79,17 +80,25 @@ function enableUserInterface(map, user_id) {
   $.getJSON("/json/userTypes.json/" + user_id, function(json) {
     loadTypes("#user-categories", json.types);
   });
+
+  $.getJSON("/json/getHome.json/" + user_id, function(json) {
+    var newHome = new _m.LatLng(json.lat, json.lng);
+    homeControl.setHome(newHome);
+    map.setCenter(newHome);
+  });
 }
 
 /**
  * Shows a modal to enter new point. If saved,
  * the point is stored and shown on the map
  */
-function addNewPoint(event) {
+function addNewPoint(event, user_id) {
   var clickEvent = event;
+  var pointLatLng = clickEvent.latLng;
+
   infoWindow.close();
 
-  var marker = placeMarker(map, clickEvent.latLng, "New Point", true);
+  var marker = placeMarker(map, pointLatLng, "New Point", true);
   var $name = $("#new-point-name");
   var $desc = $("#new-point-description");
   var $type = $("#new-point-type");
@@ -106,20 +115,23 @@ function addNewPoint(event) {
   });
 
   $("#save-point").unbind("click").click(function() {
-    var pointName = $name.val();
-    var pointDesc = $desc.val();
-    var pointType = $type.val();
+    var point = {
+      name: $name.val(),
+      lat:  pointLatLng.lat(),
+      lng:  pointLatLng.lng(),
+      desc: $desc.val(),
+      type: $type.val()
+    };
 
     $name.val('');
     $desc.val('');
     $type.val('');
 
-    pointDesc = "<div><h3>" + pointName + "</h3><span>" + pointType + "</span><p>" + pointDesc + "</p></div>";
-
-    marker.setTitle(pointName);
-    addMarker(marker, 'user', pointType, pointDesc);
+    marker.setTitle(point.name);
+    addMarker(marker, 'user', point);
     // TODO: add double click event to remove point
-    // TODO: call backend services to store the point
+
+    $.post('/json/addNewPoint/' + user_id, point);
   });
 }
 
@@ -151,17 +163,28 @@ function loadMarkers(jsonMarkers, group) {
     }
   });
 
-
   $.each(jsonMarkers, function(_, element) {
     var position = latLng(element.lat, element.lng);
     var shouldMove = group == 'user' ? true : is_admin;
     var marker = placeMarker(map, position, element.name, shouldMove);
-
-    addMarker(marker, group, element.type, element.description);
+    addMarker(marker, group, element);
   });
 }
 
-function addMarker(marker, group, type, description) {
+function addMarker(marker, group, element) {
+  var id = element._id;
+  var type = element.type;
+  var name = element.name;
+  var description;
+
+  description = "<h3>";
+  if (group != 'user') {
+    description += "<a href='/places/" + id + "'>" + name + "</a>";
+  } else {
+    description += name;
+  }
+  description += "</h3><span>" + type + "</span><p>" + element.description + "</p>";
+
   if (group == 'user') {
     if (userCategories[type] === undefined) {
       userCategories[type] = []
@@ -180,14 +203,21 @@ function addMarker(marker, group, type, description) {
   // Show the infoWindow with information about the selected marker
   _m.event.addListener(marker, 'click', function() {
     infoWindow.close();
-    infoWindow.setContent(description)
+    infoWindow.setContent(description);
     infoWindow.open(map, marker);
+
+    $.post("/json/updateViews/" + id);
   });
 
   // Setup the dragend event listener for the Marker:
   // Persist the new position in the database
   _m.event.addListener(marker, 'dragend', function() {
-    // TODO: call backend services - persist new position
+    var markerPosition = marker.getPosition();
+    element.lat = markerPosition.lat();
+    element.lng = markerPosition.lng();
+
+    $.post("/json/updatePoint/" + id, element);
+
     console.log('marker position changed to:');
     console.log(marker.getPosition());
   });
