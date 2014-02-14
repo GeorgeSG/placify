@@ -8,11 +8,15 @@
       <label for="new-point-name">Point Name:</label>
       <input type="text" id="new-point-name" placeholder="The Eiffel Tower" />
       <label>Category:</label>
-      <label><input type="radio" name="pointType" value="billiard" /> Billiard Clubs</label>
-      <label><input type="radio" name="pointType" value="snooker" /> Snooker Clubs</label>
-      <label><input type="radio" name="pointType" value="darts" /> Darts</label>
+      <select id="new-point-type">
+        <% POI.types.each do |type| %>
+        <option value="<%= type %>"><%= type %></option>
+        <% end %>
+      </select>
       <label for="new-point-description">Short Description:</label>
       <textarea id="new-point-description"></textarea>
+      <div id="additional-info">
+      </div>
     </form>
   </div>
   <div class="modal-footer">

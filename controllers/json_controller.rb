@@ -49,7 +49,7 @@ module Placify
 
     get '/extras.json' do
       content_type :json
-      {extras: Extra.all.map(*:name).uniq}.to_json
+      {extras: Extra.all.map(&:name).uniq}.to_json
     end
 
     get '/loggedUser.json' do
@@ -60,5 +60,28 @@ module Placify
         {id: nil}.to_json
       end
     end
+
+    get '/adminUser.json' do
+      content_type :json
+      {admin: admin?}.to_json
+    end
+
+    get '/getHome.json/:user_id' do
+      content_type :json
+
+      user = User.where(id: params[:user_id]).first
+      return nil if user.nil?
+
+      {lat: user.home_lat, lng: user.home_lng}.to_json
+    end
+
+    post '/setHome/:user_id' do
+      user = User.where(id: params[:user_id]).first
+      user.home_lat = params[:lat]
+      user.home_lng = params[:lng]
+      user.save
+      nil
+    end
+
   end
 end

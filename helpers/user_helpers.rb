@@ -4,6 +4,11 @@ module Placify
       not session[:uid].nil?
     end
 
+    def admin?
+      return false unless logged?
+      logged_user.admin
+    end
+
     def logged_user
       return nil unless logged?
 

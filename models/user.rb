@@ -6,6 +6,10 @@ class User
 
   field :first_name, type: String
   field :last_name,  type: String
+  field :admin,      type: Boolean, default: false
+
+  field :home_lat, type: Float
+  field :home_lng, type: Float
 
   has_and_belongs_to_many :POIs, inverse_of: nil
   embeds_many :userPOIs
@@ -22,4 +26,5 @@ class User
   #too_long: 'the password must be between 6 and 16 symbols'
 
   index({ username: 1 }, { unique: true, name: "username_index" })
+
 end

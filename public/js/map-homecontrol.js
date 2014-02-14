@@ -80,6 +80,17 @@ function HomeControl(controlDiv, map, home) {
     // TODO: call backend services
     var newHome = map.getCenter();
     control.setHome(newHome);
+
+    $.getJSON("/json/loggedUser.json", function(json) {
+      if (json.id !== null) {
+        var params = {lat: newHome.lat(), lng: newHome.lng()}
+        console.log(newHome)
+        $.post("/json/setHome/" + json.id, params, function(data) {
+          console.log(data);
+        });
+      }
+    });
+
   });
 }
 
