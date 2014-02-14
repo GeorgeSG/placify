@@ -1,6 +1,6 @@
 require './fake_helpers'
 
-UserPOI.delete_all
+UserPoi.delete_all
 
 types = ['pharmacy', 'restaurant', 'hotel', 'billiard', 'snooker', 'casino', 'supermarket', 'cinema', 'bookstore', 'mall']
 
@@ -10,7 +10,7 @@ types = ['pharmacy', 'restaurant', 'hotel', 'billiard', 'snooker', 'casino', 'su
   desc = Faker::Lorem.paragraph(10)
   type = types.sample
 
-  poi = UserPOI.new(
+  poi = UserPoi.new(
     name: name,
     type: type,
     lat: Faker::Address.latitude,
