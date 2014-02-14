@@ -11,7 +11,7 @@ class User
   field :home_lat, type: Float
   field :home_lng, type: Float
 
-  has_and_belongs_to_many :POIs, inverse_of: nil
+  has_and_belongs_to_many :POIs
   embeds_many :userPOIs
 
   validates_presence_of :username, message: 'You must provide an email for username'
@@ -26,5 +26,9 @@ class User
   #too_long: 'the password must be between 6 and 16 symbols'
 
   index({ username: 1 }, { unique: true, name: "username_index" })
+
+  def self.top_liked
+    POI.order_by([[:_id, :desc]]).limit(5)
+  end
 
 end
