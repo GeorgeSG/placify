@@ -17,7 +17,7 @@
     <% @global_pois.each do |poi| %>
       <tr>
         <td>
-          <%= poi.name %>
+          <a href="/places/<%=poi.id%>"><%= poi.name %></a>
         </td>
         <td>
           <%= poi.type %>
@@ -55,7 +55,7 @@
     <% @user_pois.each do |poi| %>
       <tr>
         <td>
-          <%= poi.name %>
+          <a href="/places/<%=poi.id%>"><%= poi.name %></a>
         </td>
         <td>
           <%= poi.type %>

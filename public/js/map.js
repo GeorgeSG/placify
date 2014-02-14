@@ -185,7 +185,7 @@ function addMarker(marker, group, element) {
   } else {
     description += name;
   }
-  description += "</h3><span>" + type + "</span><p>" + element.description + "</p>";
+  description += "</h3><span><a href='/places/search/type/" + type + "'>" + type + "</a></span><p>" + element.description + "</p>";
 
   if (element.schedule) {
     description += "<p>Schedule:<br />"
