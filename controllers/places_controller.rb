@@ -21,25 +21,24 @@ module Placify
     end
 
     get '/search/type/:search_query' do
-      redirec '/' if params[:search_query].nil?
+      redirect '/' if params[:search_query].nil?
 
       search_query = Regexp.new(params[:search_query], true)
       @global_pois = Poi.or({type: search_query}).to_a
 
-      p @global_pois
       unless logged_user.nil?
         @user_pois = logged_user.userPois.or({type: search_query}).to_a
       end
 
       erb :'places/search'
     end
+
     get '/search/:search_query' do
-      redirec '/' if params[:search_query].nil?
+      redirect '/' if params[:search_query].nil?
 
       search_query = Regexp.new(params[:search_query], true)
       @global_pois = Poi.or({name: search_query}, {type: search_query}).to_a
 
-      p @global_pois
       unless logged_user.nil?
         @user_pois = logged_user.userPois.or({name: search_query}, {type: search_query}).to_a
       end
