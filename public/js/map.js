@@ -96,6 +96,7 @@ function addNewPoint(event) {
   var marker = placeMarker(map, clickEvent.latLng, "New Point", true);
   var $name = $("#new-point-name");
   var $desc = $("#new-point-description");
+  var $type = $("#new-point-type");
 
   $("#add-point-modal").modal("show");
 
@@ -104,18 +105,18 @@ function addNewPoint(event) {
 
     $name.val('');
     $desc.val('');
+    $type.val('');
     $("#add-point-modal input[name=pointType]:checked").prop("checked", false);
   });
 
   $("#save-point").unbind("click").click(function() {
-    var $type = $("#add-point-modal input[name=pointType]:checked");
     var pointName = $name.val();
     var pointDesc = $desc.val();
     var pointType = $type.val();
 
     $name.val('');
     $desc.val('');
-    $type.prop("checked", false);
+    $type.val('');
 
     pointDesc = "<div><h3>" + pointName + "</h3><span>" + pointType + "</span><p>" + pointDesc + "</p></div>";
 
