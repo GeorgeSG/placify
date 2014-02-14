@@ -54,8 +54,9 @@ module Placify
 
     post '/updateViews/:point_id' do
       point = POI.where(id: params[:point_id]).first
+      return nil if point.nil?
+
       point.views = point.views + 1
-      p point
       point.save
       nil
     end
