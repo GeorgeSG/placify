@@ -15,7 +15,7 @@
           <tr><th colspan="2">Most Favourited</th></tr>
         </thead>
         <% @top_liked.each_with_index do |point, index| %>
-        <tr><td style="width: 10px"><%= index + 1 %></td><td><a href="#"><%= point.name %></a></td></tr>
+          <tr><td style="width: 10px"><%= index + 1 %></td><td><a href="/places/<%= point.id%>"><%= point.name %></a></td></tr>
         <% end %>
       </table>
     </div>
@@ -27,7 +27,7 @@
           <tr><th colspan="2">Most Viewed</th></tr>
         </thead>
         <% @top_viewed.each_with_index do |point, index| %>
-        <tr><td style="width: 10px"><%= index + 1 %></td><td><a href="#"><%= point.name %></a></td></tr>
+        <tr><td style="width: 10px"><%= index + 1 %></td><td><a href="/places/<%= point.id%>"><%= point.name %></a></td></tr>
         <% end %>
       </table>
     </div>
@@ -39,7 +39,7 @@
           <tr><th colspan="2">Recently Added</th></tr>
         </thead>
         <% @last_added.each_with_index do |point, index| %>
-        <tr><td style="width: 10px"><%= index + 1 %></td><td><a href="#"><%= point.name %></a></td></tr>
+        <tr><td style="width: 10px"><%= index + 1 %></td><td><a href="/places/<%= point.id%>"><%= point.name %></a></td></tr>
         <% end %>
       </table>
     </div>
