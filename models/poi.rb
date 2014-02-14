@@ -10,6 +10,7 @@ class POI
   field :shedule,     type: Hash
 
   has_and_belongs_to_many :extras
+  has_and_belongs_to_many :users
 
   validates_presence_of :name, message: 'You must provide a name for the point'
   validates_presence_of :type, message: 'You must provide a type for the point'
@@ -24,6 +25,14 @@ class POI
 
   def self.types
     [:pharmacy, :restaurant, :hotel, :billiard, :snooker, :casino, :supermarket, :cinema, :bookstore, :mall]
+  end
+
+  def self.top_viewed_places
+    POI.order_by([[:views, :desc]]).limit(5)
+  end
+
+  def self.last_added
+    POI.order_by([[:_id, :desc]]).limit(5)
   end
 end
 

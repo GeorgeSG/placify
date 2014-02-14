@@ -14,11 +14,9 @@
         <thead>
           <tr><th colspan="2">Most Favourited</th></tr>
         </thead>
-        <tr><td style="width: 10px">1.</td><td><a href="#">starbucks</a></td></tr>
-        <tr><td>2.</td><td><a href="#">starbucks</a></td></tr>
-        <tr><td>3.</td><td><a href="#">starbucks</a></td></tr>
-        <tr><td>4.</td><td><a href="#">starbucks</a></td></tr>
-        <tr><td>5.</td><td><a href="#">starbucks</a></td></tr>
+        <% @top_liked.each_with_index do |point, index| %>
+        <tr><td style="width: 10px"><%= index + 1 %></td><td><a href="#"><%= point.name %></a></td></tr>
+        <% end %>
       </table>
     </div>
   </div>
@@ -28,11 +26,9 @@
         <thead>
           <tr><th colspan="2">Most Viewed</th></tr>
         </thead>
-        <tr><td style="width: 10px">1.</td><td><a href="#">starbucks</a></td></tr>
-        <tr><td>2.</td><td><a href="#">starbucks</a></td></tr>
-        <tr><td>3.</td><td><a href="#">starbucks</a></td></tr>
-        <tr><td>4.</td><td><a href="#">starbucks</a></td></tr>
-        <tr><td>5.</td><td><a href="#">starbucks</a></td></tr>
+        <% @top_viewed.each_with_index do |point, index| %>
+        <tr><td style="width: 10px"><%= index + 1 %></td><td><a href="#"><%= point.name %></a></td></tr>
+        <% end %>
       </table>
     </div>
   </div>
@@ -42,11 +38,9 @@
         <thead>
           <tr><th colspan="2">Recently Added</th></tr>
         </thead>
-        <tr><td style="width: 10px">1.</td><td><a href="#">starbucks</a></td></tr>
-        <tr><td>2.</td><td><a href="#">starbucks</a></td></tr>
-        <tr><td>3.</td><td><a href="#">starbucks</a></td></tr>
-        <tr><td>4.</td><td><a href="#">starbucks</a></td></tr>
-        <tr><td>5.</td><td><a href="#">starbucks</a></td></tr>
+        <% @last_added.each_with_index do |point, index| %>
+        <tr><td style="width: 10px"><%= index + 1 %></td><td><a href="#"><%= point.name %></a></td></tr>
+        <% end %>
       </table>
     </div>
   </div>
