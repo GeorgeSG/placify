@@ -1,0 +1,79 @@
+<% if (@global_pois.nil? or @global_pois.size == 0) and (@user_pois.nil? or @user_pois.size == 0) %>
+  <h3> No result found </h3>
+<% end %>
+
+<% unless @global_pois.nil? or @global_pois.size == 0 %>
+<h3> Global points </h3>
+  <table class="table table-striped">
+    <tr>
+      <td> Name </td>
+      <td> Type </td>
+      <td> lng </td>
+      <td> lat </td>
+      <td> Rating </td>
+      <td> Views </td>
+    </tr>
+    <tbody>
+    <% @global_pois.each do |poi| %>
+      <tr>
+        <td>
+          <%= poi.name %>
+        </td>
+        <td>
+          <%= poi.type %>
+        </td>
+        <td>
+          <%= poi.lng %>
+        </td>
+        <td>
+          <%= poi.lat %>
+        </td>
+        <td>
+          <%= poi.rating %>
+        </td>
+        <td>
+          <%= poi.views %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% unless @user_pois.nil? or @user_pois.size == 0 %>
+<h3> User points </h3>
+  <table class="table table-striped">
+    <tr>
+      <td> Name </td>
+      <td> Type </td>
+      <td> lng </td>
+      <td> lat </td>
+      <td> Rating </td>
+      <td> Views </td>
+    </tr>
+    <tbody>
+    <% @user_pois.each do |poi| %>
+      <tr>
+        <td>
+          <%= poi.name %>
+        </td>
+        <td>
+          <%= poi.type %>
+        </td>
+        <td>
+          <%= poi.lng %>
+        </td>
+        <td>
+          <%= poi.lat %>
+        </td>
+        <td>
+          <%= poi.rating %>
+        </td>
+        <td>
+          <%= poi.views %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
