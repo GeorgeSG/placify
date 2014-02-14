@@ -8,14 +8,14 @@
       <label for="new-point-name">Point Name:</label>
       <input type="text" id="new-point-name" placeholder="The Eiffel Tower" />
       <label>Category:</label>
-      <input type="text" id="new-point-type" placeholder="u naze"/>
-      <select name="type">
+      <select name="new-point-type">
+        <% POI.types.each do |type| %>
+        <option name="<%= type %>"><%= type %></option>
+        <% end %>
       </select>
       <label for="new-point-description">Short Description:</label>
       <textarea id="new-point-description"></textarea>
       <div id="additional-info">
-        <label for="new-point-name">Point Name:</label>
-        <input type="text" id="new-point-name" placeholder="The Eiffel Tower" />
       </div>
     </form>
   </div>

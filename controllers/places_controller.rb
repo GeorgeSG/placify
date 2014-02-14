@@ -5,6 +5,7 @@ module Placify
     helpers UserHelpers
 
     get '/' do
+      @types = ["a", "b" , "c"]
       erb :'places/index'
     end
 
@@ -15,5 +16,7 @@ module Placify
     post '/addPoint' do
 
     end
+
+
   end
 end

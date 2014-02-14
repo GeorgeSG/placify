@@ -21,6 +21,10 @@ class POI
     message: 'The rating of the point must be between 0 and 5'
 
   #index({  }, { min: -200, max: 200 })
+
+  def self.types
+    @types = [:cinema, :restaurant, :pharmacy, :hotel, :bookstore, :mall, :store,]
+  end
 end
 
 class UserPOI < POI
