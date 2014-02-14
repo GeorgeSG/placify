@@ -8,6 +8,8 @@ class Poi
   field :rating,      type: Float, default: 0.0
   field :views,       type: Integer, default: 0
   field :shedule,     type: Hash
+  field :priceRange,  type: String
+  field :seats,       type: Integer
 
   has_and_belongs_to_many :extras
   has_and_belongs_to_many :users

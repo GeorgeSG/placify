@@ -187,6 +187,14 @@ function addMarker(marker, group, element) {
   }
   description += "</h3><span><a href='/places/search/type/" + type + "'>" + type + "</a></span><p>" + element.description + "</p>";
 
+  if (element.priceRange) {
+    description += "<p>Price Range: " + element.priceRange + "</p>";
+  }
+
+  if (element.seats) {
+    description += "<p>Seats: " + element.seats + "</p>";
+  }
+
   if (element.schedule) {
     description += "<p>Schedule:<br />"
     description += "Monday: " + element.schedule.mon[0] + " - " + element.schedule.mon[1] + "<br />";
@@ -195,6 +203,7 @@ function addMarker(marker, group, element) {
     description += "Thursday: " + element.schedule.thu[0] + " - " + element.schedule.thu[1] + "<br />";
     description += "Friday: " + element.schedule.fri[0] + " - " + element.schedule.fri[1] + "<br />";
   }
+
 
   if (group == 'user') {
     if (userCategories[type] === undefined) {
