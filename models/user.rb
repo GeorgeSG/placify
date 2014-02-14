@@ -11,8 +11,8 @@ class User
   field :home_lat, type: Float
   field :home_lng, type: Float
 
-  has_and_belongs_to_many :POIs
-  embeds_many :userPOIs
+  has_and_belongs_to_many :pois
+  embeds_many :userPois
 
   validates_presence_of :username, message: 'You must provide an email for username'
   validates_presence_of :password, message: 'You must provide a password'
@@ -28,7 +28,7 @@ class User
   index({ username: 1 }, { unique: true, name: "username_index" })
 
   def self.top_liked
-    POI.order_by([[:_id, :desc]]).limit(5)
+    Poi.order_by([[:_id, :desc]]).limit(5)
   end
 
 end
