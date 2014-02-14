@@ -28,6 +28,14 @@ _m.event.addDomListener(window, 'load', loadMap);
 function loadMap() {
   map = new _m.Map(document.getElementById("map-canvas"), mapOptions);
 
+  // Checks if the user has admin privilegies
+  $.getJSON("/json/adminUser.json", function(json) {
+      is_admin = false;
+      if (json.admin) {
+        is_admin = true;
+      }
+  });
+
   // Get All Public Points and load them as markers on the Map.
   $.getJSON("/json/points.json", function(json) {
       loadMarkers(json.markers, 'default');
@@ -45,12 +53,7 @@ function loadMap() {
     }
   });
 
-  // Checks if the user has admin privilegies
-  $.getJSON("/json/adminUser.json", function(json) {
-      if (json.admin) {
-        is_admin = true;
-      }
-  });
+
 }
 
 /**
@@ -90,6 +93,7 @@ function addNewPoint(event) {
   var marker = placeMarker(map, clickEvent.latLng, "New Point", true);
   var $name = $("#new-point-name");
   var $desc = $("#new-point-description");
+  var $type = $("#new-point-type");
 
   $("#add-point-modal").modal("show");
 
@@ -98,18 +102,18 @@ function addNewPoint(event) {
 
     $name.val('');
     $desc.val('');
+    $type.val('');
     $("#add-point-modal input[name=pointType]:checked").prop("checked", false);
   });
 
   $("#save-point").unbind("click").click(function() {
-    var $type = $("#add-point-modal input[name=pointType]:checked");
     var pointName = $name.val();
     var pointDesc = $desc.val();
     var pointType = $type.val();
 
     $name.val('');
     $desc.val('');
-    $type.prop("checked", false);
+    $type.val('');
 
     pointDesc = "<div><h3>" + pointName + "</h3><span>" + pointType + "</span><p>" + pointDesc + "</p></div>";
 

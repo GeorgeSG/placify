@@ -23,7 +23,7 @@ class POI
   #index({  }, { min: -200, max: 200 })
 
   def self.types
-    [:cinema, :restaurant, :pharmacy, :hotel, :bookstore, :mall, :store]
+    [:pharmacy, :restaurant, :hotel, :billiard, :snooker, :casino, :supermarket, :cinema, :bookstore, :mall]
   end
 end
 
