@@ -9,6 +9,25 @@ module Placify
       {markers: POI.all}.to_json
     end
 
+    post '/addNewPoint' do
+      content_type :json
+
+      if logged?
+        poi = UserPOI.new(
+          name: params[:name],
+          type: params[:type],
+          lat: params[:lat],
+          lng: params[:lng],
+          description: params[:desc]
+        )
+
+        poi.user = logged_user;
+        poi.save
+      end
+
+      nil
+    end
+
     get '/userPoints.json/:id' do
       content_type :json
 

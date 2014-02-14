@@ -78,9 +78,11 @@ function enableUserInterface(map, user_id) {
  */
 function addNewPoint(event) {
   var clickEvent = event;
+  var pointLatLng = clickEvent.latLng;
+
   infoWindow.close();
 
-  var marker = placeMarker(map, clickEvent.latLng, "New Point", true);
+  var marker = placeMarker(map, pointLatLng, "New Point", true);
   var $name = $("#new-point-name");
   var $desc = $("#new-point-description");
 
@@ -96,20 +98,26 @@ function addNewPoint(event) {
 
   $("#save-point").unbind("click").click(function() {
     var $type = $("#add-point-modal input[name=pointType]:checked");
-    var pointName = $name.val();
-    var pointDesc = $desc.val();
-    var pointType = $type.val();
+
+    var point = {
+      name: $name.val(),
+      lat:  pointLatLng.lat(),
+      lng:  pointLatLng.lng(),
+      desc: $desc.val(),
+      type: $type.val()
+    };
 
     $name.val('');
     $desc.val('');
     $type.prop("checked", false);
 
-    pointDesc = "<div><h3>" + pointName + "</h3><span>" + pointType + "</span><p>" + pointDesc + "</p></div>";
+    point.desc = "<div><h3>" + point.name + "</h3><span>" + point.types + "</span><p>" + point.desc + "</p></div>";
 
-    marker.setTitle(pointName);
-    addMarker(marker, 'user', pointType, pointDesc);
+    marker.setTitle(point.name);
+    addMarker(marker, 'user', point.type, point.desc);
     // TODO: add double click event to remove point
-    // TODO: call backend services to store the point
+
+    $.post('/json/addNewPoint', point);
   });
 }
 
