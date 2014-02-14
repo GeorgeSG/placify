@@ -6,6 +6,7 @@ class POI
   field :lng,         type: Float
   field :lat,         type: Float
   field :rating,      type: Float, default: 0.0
+  field :views,       type: Integer, default: 0
   field :shedule,     type: Hash
 
   has_and_belongs_to_many :extras
@@ -16,7 +17,8 @@ class POI
   validates_presence_of :lat, message: 'You must provide latitude for the point'
 
 
-  validates_numericality_of :rating, greater_than_or_equal_to: 0.0, less_than_or_equal_to: 5.0, message: 'The rating of the point must be between 0 and 5'
+  validates_numericality_of :rating, greater_than_or_equal_to: 0.0, less_than_or_equal_to: 5.0,
+    message: 'The rating of the point must be between 0 and 5'
 
   #index({  }, { min: -200, max: 200 })
 end

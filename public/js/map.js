@@ -44,6 +44,14 @@ function loadMap() {
       enableUserInterface(map, json.id);
     }
   });
+
+  // Checks if the user has admin privilegies
+  $.getJSON("/json/adminUser.json", function(json) {
+      if (json.admin) {
+        // globalna promenliva
+        is_admin = true;
+      }
+  });
 }
 
 /**
@@ -141,10 +149,12 @@ function loadMarkers(jsonMarkers, group) {
     }
   });
 
+
   $.each(jsonMarkers, function(_, element) {
     var position = latLng(element.lat, element.lng);
-    var marker   = placeMarker(map, position, element.name, true);
-
+    var shouldMove = group == 'user' ? true : is_admin;
+    var marker = placeMarker(map, position, element.name, shouldMove);    
+    
     addMarker(marker, group, element.type, element.description);
   });
 }
@@ -168,6 +178,9 @@ function addMarker(marker, group, type, description) {
   // Show the infoWindow with information about the selected marker
   _m.event.addListener(marker, 'click', function() {
     infoWindow.close();
+
+
+    //da se smeni da pokazva custom ekran
     infoWindow.setContent(description)
     infoWindow.open(map, marker);
   });

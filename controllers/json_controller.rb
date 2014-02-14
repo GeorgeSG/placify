@@ -30,7 +30,7 @@ module Placify
 
     get '/extras.json' do
       content_type :json
-      {extras: Extra.all.map(*:name).uniq}.to_json
+      {extras: Extra.all.map(&:name).uniq}.to_json
     end
 
     get '/loggedUser.json' do
@@ -40,6 +40,11 @@ module Placify
       else
         {id: nil}.to_json
       end
+    end
+
+    get '/adminUser.json' do
+      content_type :json
+      {admin: admin?}.to_json
     end
   end
 end
