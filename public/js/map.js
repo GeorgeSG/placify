@@ -205,7 +205,12 @@ function addMarker(marker, group, element) {
   // Setup the dragend event listener for the Marker:
   // Persist the new position in the database
   _m.event.addListener(marker, 'dragend', function() {
-    // TODO: call backend services - persist new position
+    var markerPosition = marker.getPosition();
+    element.lat = markerPosition.lat();
+    element.lng = markerPosition.lng();
+
+    $.post("/json/updatePoint/" + id, element);
+
     console.log('marker position changed to:');
     console.log(marker.getPosition());
   });
