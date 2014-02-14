@@ -1,4 +1,4 @@
-class POI
+class Poi
   include Mongoid::Document
   field :name,        type: String
   field :type,        type: String
@@ -28,15 +28,15 @@ class POI
   end
 
   def self.top_viewed_places
-    POI.order_by([[:views, :desc]]).limit(5)
+    Poi.order_by([[:views, :desc]]).limit(5)
   end
 
   def self.last_added
-    POI.order_by([[:_id, :desc]]).limit(5)
+    Poi.order_by([[:_id, :desc]]).limit(5)
   end
 end
 
-class UserPOI < POI
+class UserPoi < Poi
   embedded_in :user
 end
 
