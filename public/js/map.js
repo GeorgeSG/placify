@@ -124,10 +124,8 @@ function addNewPoint(event) {
     $desc.val('');
     $type.val('');
 
-    point.desc = "<div><h3>" + point.name + "</h3><span>" + point.types + "</span><p>" + point.desc + "</p></div>";
-
     marker.setTitle(point.name);
-    addMarker(marker, 'user', point.type, point.desc);
+    addMarker(marker, 'user', point);
     // TODO: add double click event to remove point
 
     $.post('/json/addNewPoint', point);
@@ -166,12 +164,18 @@ function loadMarkers(jsonMarkers, group) {
     var position = latLng(element.lat, element.lng);
     var shouldMove = group == 'user' ? true : is_admin;
     var marker = placeMarker(map, position, element.name, shouldMove);
-
-    addMarker(marker, group, element.type, element.description);
+    addMarker(marker, group, element);
   });
 }
 
-function addMarker(marker, group, type, description) {
+function addMarker(marker, group, element) {
+  var id = element._id;
+  var type = element.type;
+  var name = element.name;
+  var description = element.description;
+
+  description = "<h3><a href='/places/" + id + "'>" + name + "</a></h3><span>" + type + "</span><p>" + description + "</p>";
+
   if (group == 'user') {
     if (userCategories[type] === undefined) {
       userCategories[type] = []
@@ -190,8 +194,10 @@ function addMarker(marker, group, type, description) {
   // Show the infoWindow with information about the selected marker
   _m.event.addListener(marker, 'click', function() {
     infoWindow.close();
-    infoWindow.setContent(description)
+    infoWindow.setContent(description);
     infoWindow.open(map, marker);
+
+    $.post("/json/updateViews/" + id);
   });
 
   // Setup the dragend event listener for the Marker:

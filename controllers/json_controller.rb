@@ -24,7 +24,13 @@ module Placify
         poi.user = logged_user;
         poi.save
       end
+    end
 
+    post '/updateViews/:point_id' do
+      point = POI.where(id: params[:point_id]).first
+      point.views = point.views + 1
+      p point
+      point.save
       nil
     end
 
@@ -82,6 +88,5 @@ module Placify
       user.save
       nil
     end
-
   end
 end
