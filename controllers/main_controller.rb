@@ -9,6 +9,7 @@ module Placify
     end
 
     get '/about' do
+      @title = 'About Placify'
       erb :'home/about'
     end
   end

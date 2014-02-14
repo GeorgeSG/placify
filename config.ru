@@ -24,8 +24,10 @@ module Placify
     register do
       def auth (type)
         condition do
-          flash[:info] = 'You need to be logged in to access this page.'
-          redirect "auth/login" unless send("#{type}?")
+          unless send "#{type}?"
+            flash[:info] = 'You need to be logged in to access this page.'
+            redirect "auth/login"
+          end
         end
       end
     end
@@ -41,6 +43,7 @@ controllers = [
   Placify::JSONController,
   Placify::MainController,
   Placify::PlacesController,
+  Placify::UsersController,
 ]
 
 controllers.each do |controller|

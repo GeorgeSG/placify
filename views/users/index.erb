@@ -1,0 +1,14 @@
+<table class="table table-striped">
+  <tr><th>Name</th></tr>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td>
+          <a href="/users/<%= user.id %>">
+            <%= user.first_name %> <%= user.last_name %>
+          </a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
