@@ -174,9 +174,15 @@ function addMarker(marker, group, element) {
   var id = element._id;
   var type = element.type;
   var name = element.name;
-  var description = element.description;
+  var description;
 
-  description = "<h3><a href='/places/" + id + "'>" + name + "</a></h3><span>" + type + "</span><p>" + description + "</p>";
+  description = "<h3>";
+  if (group != 'user') {
+    description += "<a href='/places/" + id + "'>" + name + "</a>";
+  } else {
+    description += name;
+  }
+  description += "</h3><span>" + type + "</span><p>" + element.description + "</p>";
 
   if (group == 'user') {
     if (userCategories[type] === undefined) {
