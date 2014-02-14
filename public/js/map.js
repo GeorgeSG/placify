@@ -28,6 +28,14 @@ _m.event.addDomListener(window, 'load', loadMap);
 function loadMap() {
   map = new _m.Map(document.getElementById("map-canvas"), mapOptions);
 
+  is_admin = false;
+  // Checks if the user has admin privilegies
+  $.getJSON("/json/adminUser.json", function(json) {
+    if (json.admin) {
+      is_admin = true;
+    }
+  });
+
   // Get All Public Points and load them as markers on the Map.
   $.getJSON("/json/points.json", function(json) {
       loadMarkers(json.markers, 'default');
@@ -36,20 +44,12 @@ function loadMap() {
   // Get All Types of Points listed in the database
   $.getJSON("/json/types.json", function(json) {
     loadTypes("#default-categories", json.types);
-
   });
 
   $.getJSON("/json/loggedUser.json", function(json) {
     if (json.id !== null) {
       enableUserInterface(map, json.id);
     }
-  });
-
-  // Checks if the user has admin privilegies
-  $.getJSON("/json/adminUser.json", function(json) {
-      if (json.admin) {
-        is_admin = true;
-      }
   });
 }
 
@@ -76,6 +76,12 @@ function enableUserInterface(map, user_id) {
 
   $.getJSON("/json/userTypes.json/" + user_id, function(json) {
     loadTypes("#user-categories", json.types);
+  });
+
+  $.getJSON("/json/getHome.json/" + user_id, function(json) {
+    var newHome = new _m.LatLng(json.lat, json.lng);
+    homeControl.setHome(newHome);
+    map.setCenter(newHome);
   });
 }
 
@@ -116,7 +122,7 @@ function addNewPoint(event) {
     marker.setTitle(pointName);
     addMarker(marker, 'user', pointType, pointDesc);
     // TODO: add double click event to remove point
-    // TODO: call backend services to store the point
+    // TsODO: call backend services to store the point
   });
 }
 
