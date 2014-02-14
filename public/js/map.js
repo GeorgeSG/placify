@@ -59,7 +59,9 @@ function loadMap() {
 function enableUserInterface(map, user_id) {
   // Setup the click event listener for the Map:
   // Add a new marker on the clicked location
-  _m.event.addListener(map, 'click', addNewPoint);
+  _m.event.addListener(map, 'click', function(event) {
+    addNewPoint(event, user_id);
+  });
 
   // Create the DIV to hold the control and call the
   // HomeControl() constructor passing in this DIV.
@@ -89,7 +91,7 @@ function enableUserInterface(map, user_id) {
  * Shows a modal to enter new point. If saved,
  * the point is stored and shown on the map
  */
-function addNewPoint(event) {
+function addNewPoint(event, user_id) {
   var clickEvent = event;
   var pointLatLng = clickEvent.latLng;
 
@@ -128,7 +130,7 @@ function addNewPoint(event) {
     addMarker(marker, 'user', point);
     // TODO: add double click event to remove point
 
-    $.post('/json/addNewPoint', point);
+    $.post('/json/addNewPoint/' + user_id, point);
   });
 }
 
